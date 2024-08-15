@@ -1,7 +1,7 @@
 // TASK: import helper functions from utils
 import { getTasks, saveTasks, createNewTask, patchTask, putTask, deleteTask  } from"./utils/taskFunction.js";
 // TASK: import initialData
-import initialData  from "./initialData.js";
+import { initialData } from "./initialData.js";
 
 /*************************************************************************************************************************************************
  * FIX BUGS!!!
@@ -20,7 +20,7 @@ function initializeData(data) {
 // TASK: Get elements from the DOM
 const elements = {
   headerBoardName: document.getElementById("header-board-name"),
-  columnDivs: document.querySelectorAll(".column-div"),
+  columnDivs: document.querySelectorAll("column-div"),
   filterDiv: document.getElementById("filterDiv"),
   hideSideBarBtn: document.getElementById("hide-side-bar-btn"),
   showSideBarBtn: document.getElementById("show-side-bar-btn"),
@@ -213,27 +213,42 @@ function addTask(event) {
 
 
 function toggleSidebar(show) {
+  document.getElementById("side-bar-div").style.display = show ? 'block' : 'none';
+  elements.showSideBarBtn.style.display = show ? 'none' : 'block';
+  localStorage.showSideBar = show;
  
 }
 
 function toggleTheme() {
-  document.querySelector('#themeToggle').addEventListener('click', toggleTheme);
- 
+  const logo = document.getElementById("logo");
+  document.body.classList.toggle('light-theme');
+  localStorage.setItem("isLightTheme", document.body.classList.contains("light-theme"));
+  localStorage.getItem("isLightTheme") === "true" ? logo.setAttribute("src", "./assets/logo-light.svg") : logo.setAttribute("src", "./assets/logo-dark.svg");
 }
 
 
 
 function openEditTaskModal(task) {
   // Set task details in modal inputs
-  
+  let taskTitleEl = document.getElementById("edit-task-title-input");
+  let taskDescriptionEl = document.getElementById("edit-task-desc-input");
+  let taskStatusEl = document.getElementById("edit-select-status");
 
-  // Get button elements from the task modal
+  taskTitleEl.value = task.title;
+  taskDescriptionEl.value = task.description;
+  taskStatusEl.value = task.status;
 
+  elements.editTaskModal.style.display = "block";
 
-  // Call saveTaskChanges upon click of Save Changes button
- 
+  document.getElementById("cancel-edit-btn").addEventListener("click", () => elements.editTaskModal.style.display = "none");
 
-  // Delete task using a helper function and close the task modal
+  document.getElementById("delete-task-btn").addEventListener("click", () => {
+    deleteTask(task.id)
+    refreshTasksUI()
+    elements.editTaskModal.style.display = "none"
+  });
+
+  document.getElementById("save-task-changes-btn").addEventListener("click", () => saveTaskChanges(task.id));
 
 
   toggleModal(true, elements.editTaskModal); // Show the edit task modal
@@ -242,15 +257,21 @@ function openEditTaskModal(task) {
 function saveTaskChanges(taskId) {
   // Get new user inputs
   
+  let taskTitleEl = document.getElementById("edit-task-title-input");
+  let taskDescriptionEl = document.getElementById("edit-task-desc-input");
+  let taskStatusEl = document.getElementById("edit-select-status");
 
   // Create an object with the updated task details
-
+  let updatedTask = {
+    "id": taskId,
+    "title": taskTitleEl.value,
+    "description": taskDescriptionEl.value,
+    "status": taskStatusEl.value,
+    "board": elements.headerBoardName.textContent
+  };
 
   // Update task using a hlper functoin
- 
-
-  // Close the modal and refresh the UI to reflect the changes
-
+ putTask(taskId, updatedTask);
   refreshTasksUI();
 }
 
@@ -266,5 +287,6 @@ function init() {
   toggleSidebar(showSidebar);
   const isLightTheme = localStorage.getItem('light-theme') === 'enabled';
   document.body.classList.toggle('light-theme', isLightTheme);
+  localStorage.getItem("isLightTheme") === "true" ? logo.setAttribute("src", "./assets/logo-light.svg") : logo.setAttribute("src", "./assets/logo-dark.svg");
   fetchAndDisplayBoardsAndTasks(); // Initial display of boards and tasks
 }
