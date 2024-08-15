@@ -1,7 +1,8 @@
 // TASK: import helper functions from utils
-import { getTasks, saveTasks, createNewTask, patchTask, putTask, deleteTask  } from"./utils/taskFunction.js";
+import { getTasks, saveTasks, createNewTask, patchTask, putTask, deleteTask  } from"../utils/taskFunction.js";
 // TASK: import initialData
 import { initialData } from "./initialData.js";
+
 
 /*************************************************************************************************************************************************
  * FIX BUGS!!!
@@ -20,18 +21,18 @@ function initializeData(data) {
 // TASK: Get elements from the DOM
 const elements = {
   headerBoardName: document.getElementById("header-board-name"),
-  columnDivs: document.querySelectorAll("column-div"),
+  columnDivs: document.querySelectorAll("#column-div"),
   filterDiv: document.getElementById("filterDiv"),
   hideSideBarBtn: document.getElementById("hide-side-bar-btn"),
   showSideBarBtn: document.getElementById("show-side-bar-btn"),
   themeSwitch: document.getElementById("switch"),
   createNewTaskBtn: document.getElementById("add-new-task-btn"),
   modalWindow: document.getElementById("new-task-modal-window"),
-  editTaskModal: document.querySelector(".edit-task-modal-window")
+  editTaskModal: document.querySelector("#edit-task-modal-window")
 
 }
 
-let activeBoard = ""
+let activeBoard = "";
 
 // Extracts unique board names from tasks
 // TASK: FIX BUGS
@@ -91,7 +92,10 @@ function filterAndDisplayTasksByBoard(boardName) {
       taskElement.classList.add("task-div");
       taskElement.textContent = task.title;
       taskElement.setAttribute('data-task-id', task.id);
-      taskElement.addEventListener('click', () => openEditTaskModal(task));
+      taskElement.addEventListener('click', () => {
+        openEditTaskModal(task);
+      });
+      // fixed a bug here
       tasksContainer.appendChild(taskElement);
     });
   });
@@ -119,7 +123,7 @@ function styleActiveBoard(boardName) {
 
 
 function addTaskToUI(task) {
-  const column = document.querySelector(`[.column-div[data-status="${task.status}"]`); 
+  const column = document.querySelector(`.column-div[data-status="${task.status}"]`);
   if (!column) {
     console.error(`Column not found for status: ${task.status}`);
     return;
@@ -127,7 +131,6 @@ function addTaskToUI(task) {
 
   let tasksContainer = column.querySelector('.tasks-container');
   if (!tasksContainer) {
-    console.warn(`Tasks container not found for status: ${task.status}, creating one.`);
     tasksContainer = document.createElement('div');
     tasksContainer.className = 'tasks-container';
     column.appendChild(tasksContainer);
@@ -135,12 +138,11 @@ function addTaskToUI(task) {
 
   const taskElement = document.createElement('div');
   taskElement.className = 'task-div';
-  taskElement.textContent = task.title; // Modify as needed
+  taskElement.textContent = task.title;
   taskElement.setAttribute('data-task-id', task.id);
-  
-  tasksContainer.appendChild(taskElement); 
-}
 
+  tasksContainer.appendChild(taskElement);
+}
 
 
 function setupEventListeners() {
@@ -165,13 +167,20 @@ function setupEventListeners() {
   elements.hideSideBarBtn.addEventListener('click', () => toggleSidebar(false));
   elements.showSideBarBtn.addEventListener('click',()  => toggleSidebar(true));
 
+  
+const toggleTheme = () => {
+  document.body.classList.toggle('dark-theme');
+};
+
+document.querySelector('#themeToggle').addEventListener('click', toggleTheme);
+
   // Theme switch event listener
-  elements.themeSwitch.addEventListener('change', toggleTheme);
-if (themeSwitch.checked) {
-  document.body.classList.add('dark-theme')
-} else {
-  document.body.classList.remove('dark-theme')
-}
+ // elements.themeSwitch.addEventListener('change', toggleTheme);
+//if (themeSwitch.checked) {
+  //document.body.classList.add('dark-theme')
+//} else {
+ // document.body.classList.remove('dark-theme')
+//}
   // Show Add New Task Modal event listener
   elements.createNewTaskBtn.addEventListener('click', () => {
     toggleModal(true);
@@ -198,7 +207,13 @@ function addTask(event) {
   event.preventDefault(); 
 
   //Assign user input to the task object
+  const taskTitle = document.getElementById("title-input").value;
     const task = {
+      "title" : document.getElementById("title-input").value,
+      "description" : document.getElementById("dec-input").value,
+      "status" : document.getElementById("select-status"),
+      "board" : elements.headerBoardName.textContent
+
       
     };
     const newTask = createNewTask(task);
