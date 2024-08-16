@@ -1,5 +1,5 @@
 // TASK: import helper functions from utils
-import { getTasks, saveTasks, createNewTask, patchTask, putTask, deleteTask  } from"../utils/taskFunction.js";
+import { getTasks, createNewTask, putTask, patchTask, deleteTask  } from './utils/taskFunction.js';
 // TASK: import initialData
 import { initialData } from "./initialData.js";
 
@@ -211,13 +211,16 @@ function addTask(event) {
     const task = {
       "title" : document.getElementById("title-input").value,
       "description" : document.getElementById("dec-input").value,
-      "status" : document.getElementById("select-status"),
+      "status" : document.getElementById("select-status").value,
       "board" : elements.headerBoardName.textContent
 
       
     };
     const newTask = createNewTask(task);
     if (newTask) {
+      const tasks = putTask(); 
+      tasks.push(newTask);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
       addTaskToUI(newTask);
       toggleModal(false);
       elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
@@ -245,9 +248,9 @@ function toggleTheme() {
 
 function openEditTaskModal(task) {
   // Set task details in modal inputs
-  let taskTitleEl = document.getElementById("edit-task-title-input");
-  let taskDescriptionEl = document.getElementById("edit-task-desc-input");
-  let taskStatusEl = document.getElementById("edit-select-status");
+  const taskTitleEl = document.getElementById("edit-task-title-input");
+  const taskDescriptionEl = document.getElementById("edit-task-desc-input");
+ const taskStatusEl = document.getElementById("edit-select-status");
 
   taskTitleEl.value = task.title;
   taskDescriptionEl.value = task.description;
@@ -286,7 +289,7 @@ function saveTaskChanges(taskId) {
   };
 
   // Update task using a hlper functoin
- putTask(taskId, updatedTask);
+  patchTask(taskId, updatedTask);
   refreshTasksUI();
 }
 
