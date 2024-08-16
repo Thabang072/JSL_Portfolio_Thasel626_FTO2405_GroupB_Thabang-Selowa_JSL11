@@ -36,7 +36,7 @@ const elements = {
   statusInput : document.getElementById('select-status'),
   createTaskBtn : document.getElementById('create-task-btn'),
   cancelAddTaskBtn : document.getElementById('cancel-add-task-btn'),
-  editTaskModal: document.getElementsByClassName('edit-task-modal-window')[1],
+  editTaskModal: document.getElementsByClassName('edit-task-modal-window')[0],
   editTaskTitleInput : document.getElementById('edit-task-title-input'),
   editTaskDescInput : document.getElementById('edit-task-desc-input'),
   editSelectStatus : document.getElementById('edit-select-status')
