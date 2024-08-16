@@ -207,6 +207,7 @@ function setupEventListeners() {
 // Task: Fix bugs
 function toggleModal(show, modal = elements.modalWindow) {
   
+  
   modal.style.display = show ? 'block' : 'none'; 
 }
 
