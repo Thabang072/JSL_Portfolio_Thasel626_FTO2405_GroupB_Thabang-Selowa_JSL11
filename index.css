@@ -50,7 +50,7 @@ body {
   /* border: 5px solid rgb(0, 0, 0); */
   border-right: 0.1px solid #979797;
   /* flex: 0.8; */
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 50px;
   /* padding-left: 50px; */
@@ -180,7 +180,7 @@ h4 {
   bottom: 45px;
   border-radius: 0 20px 20px 0;
   background-color: #219C90;
-  display:flex;
+  display: none;
   cursor: pointer;
 }
 
@@ -402,7 +402,7 @@ header {
   font-weight: 500;
   font-size: 14px;
   border-radius: 10px;
-  display:flex;
+  display: none;
   z-index: 3;
   transition: all 0.3s ease-in;
 }
@@ -449,7 +449,7 @@ header {
   justify-content: space-around;
   padding: 10px;
   width: 130px;
-  display: flex;
+  display: none;
 }
 
 #editBoardDiv {
@@ -467,7 +467,7 @@ header {
   width: 120px;
   height: 50px;
   border-radius: 8px;
-  display: flex;
+  display: none;
   z-index: 5;
 }
 
@@ -718,7 +718,7 @@ input {
   height: 100%;
   width: 100%;
   position: absolute;
-  display: flex;
+  display: none;
   z-index: 2;
 }
 
@@ -1114,7 +1114,7 @@ input:checked + #label-checkbox-theme:after {
   }
 
   #side-logo-div {
-    display: flex;
+    display: none;
   }
 
   .side-bar-bottom {
@@ -1124,7 +1124,7 @@ input:checked + #label-checkbox-theme:after {
   }
 
   .hide-side-bar-div {
-    display: flex;
+    display: none;
   }
 
   .toggle-div {
@@ -1170,7 +1170,7 @@ input:checked + #label-checkbox-theme:after {
   }
 
   .side-bar {
-    display: flex;
+    display: none;
     padding: 0;
     height: 60%;
     width: 60%;
