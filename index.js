@@ -19,7 +19,7 @@ function initializeData() {
 // TASK: Get elements from the DOM
 const elements = {
   headerBoardName: document.getElementById('header-board-name'),
-  logo : document.getElementById('logo'),
+  logoHeader : document.getElementById('logo'),
   themeSwitch: document.getElementById('switch'),
   modalWindow : document.getElementById('new-task-modal-window'),
   //  div element 
@@ -46,7 +46,7 @@ const elements = {
   editBoardBtn: document.getElementById('edit-board-btn'),
   editBoardDiv: document.getElementById('editBoardDiv'),
   editSelectStatus : document.getElementById('edit-select-status'),
-  image: document.getElementById("svgName")
+  //image: document.getElementById("svgName")
   
 };
 
@@ -167,8 +167,6 @@ function addTaskToUI(task) {
   tasksContainer.appendChild(taskElement); 
 }
 
-
-
 function setupEventListeners() {
   // Cancel editing task event listener
   const cancelEditBtn = document.getElementById('cancel-edit-btn');
@@ -245,8 +243,8 @@ function addTask(event) {
 }
 function toggleSidebar(show) {
  
-  elements.showSideBarBtn.style.display = show ? 'none' : 'block';
-  elements.sideBar.style.display = show ? 'block' : 'none';
+  elements.showSideBarBtn.style.display = show ? 'none' : 'flex';
+  elements.sideBar.style.display = show ? 'flex' : 'none';
 }
 
 function toggleTheme() {
@@ -254,7 +252,7 @@ function toggleTheme() {
   const isLightTheme = document.body.classList.contains('light-theme');
   localStorage.setItem('light-theme', isLightTheme ? 'enabled' : 'disabled');
   elements.themeSwitch.checked = isLightTheme;
-  elements.logo.src  = elements.logo.src.replace(window.location.origin, ".").replace(isLightTheme ? 'dark' : 'light', isLightTheme ? 'light' : 'dark');
+  elements.logoHeader.src  = elements.logoHeader.src.replace(window.location.origin, ".").replace(isLightTheme ? 'dark' : 'light', isLightTheme ? 'light' : 'dark');
   
 }
 
@@ -325,7 +323,7 @@ function init() {
   const isLightTheme = localStorage.getItem('light-theme') === 'enabled';
   document.body.classList.toggle('light-theme', isLightTheme);
   elements.themeSwitch.checked = isLightTheme;
-  elements.logo.src = elements.logo.src.replace(window.location.origin, ".").replace(isLightTheme ? 'dark' : 'light', isLightTheme ? 'light' : 'dark');
+  elements.logoHeader.src = elements.logoHeader.src.replace(window.location.origin, ".").replace(isLightTheme ? 'dark' : 'light', isLightTheme ? 'light' : 'dark');
   // refreshTasksUI(); // Initial display of boards and tasks
   fetchAndDisplayBoardsAndTasks();
 }
