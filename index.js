@@ -25,7 +25,9 @@ const elements = {
   //  div element 
   sideBar: document.getElementById('side-bar-div'),
   filterDiv: document.getElementById('filterDiv'),
+  sideLogoDiv: document.getElementById('side-logo-div'),
   columnDivs: document.querySelectorAll('.column-div'),
+  
   
   // button element
   addNewTaskBtn: document.getElementById('add-new-task-btn'),
@@ -124,7 +126,6 @@ function filterAndDisplayTasksByBoard(boardName) {
   });
 }
 
-
 function refreshTasksUI() {
   filterAndDisplayTasksByBoard(activeBoard);
 }
@@ -186,8 +187,9 @@ function setupEventListeners() {
   });
 
   // Show sidebar event listener
-  elements.hideSideBarBtn.addEventListener ('click' ,() => toggleSidebar(false));
   elements.showSideBarBtn.addEventListener ('click',() => toggleSidebar(true));
+  elements.hideSideBarBtn.addEventListener ('click' ,() => toggleSidebar(false));
+  
 
   // Theme switch event listener
   elements.themeSwitch.addEventListener('click', (event) => toggleTheme(event));
@@ -252,6 +254,7 @@ function toggleTheme() {
   const isLightTheme = document.body.classList.contains('light-theme');
   localStorage.setItem('light-theme', isLightTheme ? 'enabled' : 'disabled');
   elements.themeSwitch.checked = isLightTheme;
+  console.log(elements.logoHeader.src)
   elements.logoHeader.src  = elements.logoHeader.src.replace(window.location.origin, ".").replace(isLightTheme ? 'dark' : 'light', isLightTheme ? 'light' : 'dark');
   
 }
