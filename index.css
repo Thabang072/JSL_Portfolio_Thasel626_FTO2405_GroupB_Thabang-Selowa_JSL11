@@ -799,7 +799,7 @@ input:checked + #label-checkbox-theme:after {
 }
 
 .logo-mobile {
-  display: none;
+  display: flex;
 }
 
 @media screen and (max-width: 800px) {
